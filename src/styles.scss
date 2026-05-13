@@ -1,0 +1,385 @@
+
+@import "primeicons/primeicons.css";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+app-root {
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@mixin backlight($x, $y, $spread, $size, $colorA, $colorB, $duration) {
+    &:after {
+      position: absolute;
+      content: "";
+      top: $y;
+      left: $x;
+      right: 0;
+      z-index: -1;
+      height: 100%;
+      width: 100%;
+      margin: 0 auto;
+      transform: scale($size);
+      -webkit-filter: blur($spread);
+      -moz-filter: blur($spread);
+      -ms-filter: blur($spread);
+      filter: blur($spread);
+      background: linear-gradient(270deg, $colorA, $colorB);
+      background-size: 200% 200%;
+      animation: animateGlow $duration ease infinite;
+      
+      @keyframes animateGlow {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+      }
+    }
+}
+
+// @mixin border-neon($colorA, $colorB, $duration) {
+//     position: relative;
+  
+//     &:after {
+//       content: "";
+//       position: absolute;
+//       inset: -5px;
+//       z-index: -1;
+//       border-radius: inherit;
+//       background: linear-gradient(270deg, $colorA, $colorB);
+//       background-size: 200% 200%;
+//       filter: blur(10px);
+//       animation: neonBorder $duration ease infinite;
+//     }
+  
+//     @keyframes neonBorder {
+//       0% { background-position: 0% 50% }
+//       50% { background-position: 100% 50% }
+//       100% { background-position: 0% 50% }
+//     }
+// }
+
+@mixin animated-border-glow ($colorA, $colorB, $duration) {
+    position: relative;
+    z-index: 1;
+    border-radius: 6px !important;
+    &:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(270deg, $colorA, $colorB);
+      background-size: 200% 200%;
+      z-index: -1;
+      animation: borderGlow $duration ease infinite;
+    }
+  
+    @keyframes borderGlow {
+      0% { background-position: 0% 50% }
+      50% { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+}
+
+.animated-border-header, .animated-border {
+    position: relative;
+    background: linear-gradient(270deg, #0ed3a2, #7e0fff);
+    background-size: 200% 200%;
+    animation: borderAnimation 10s ease infinite;
+  
+    @keyframes borderAnimation {
+      0% { background-position: 0% 50% }
+      50% { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+}
+
+.animated-border-header {
+    flex: 0 0 auto;
+    border-radius: 0 0 6px 6px;
+    padding: 0 2px 2px 2px;
+    margin: 0 1rem;
+}
+
+.animated-border {
+    border-radius: 6px;
+    padding: 2px;
+}
+
+
+.premium-card {
+    padding: 2rem;
+    border-radius: 6px;
+    text-align: center;
+    max-width: 400px;
+
+    background: rgba(15, 23, 42, 0.8);
+
+    @include animated-border-glow(#0ed3a2, #7e0fff, 6s);
+}
+
+
+:root {
+    --font-logo: 32px;
+    --font-title: 28px;
+    --font-subtitle: 22px;
+    --font-section: 18px;
+
+    --font-normal: 16px;
+    --font-small: 14px;
+    --font-xs: 12px;
+}
+
+*{
+    font-size: var(--font-small);
+}
+
+// * {
+//     outline: 1px solid red;
+// }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+app-root {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+// app-room {
+//     display: grid;
+//     grid-template-columns: 1fr 2fr 1fr;
+//     gap: 1rem;
+//     height: 100%;
+// }
+
+.app-container {
+    height: 100%;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba(168, 85, 247, 0.25),
+        transparent 40%
+        ),
+        radial-gradient(
+        circle at 80% 0%,
+        rgba(236, 72, 153, 0.25),
+        transparent 40%
+        ),
+        #020617;
+    font-family: "Inter", sans-serif;
+    color: var(--text-color);
+}
+  
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.logo {
+    font-size: var(--font-logo);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+  
+h1 {
+    font-size: var(--font-title);
+}
+  
+h2 {
+    font-size: var(--font-subtitle);
+}
+
+.p-button {
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+
+input, p-select, p-inputnumber, p-password, textarea, p-datepicker {
+    width: 100%;
+}
+
+.mat-select-panel-animations-enabled {
+    background-color: white !important;
+}
+
+p-tablist {
+    border-radius: 6px 6px 0 0;
+}
+
+p-paginator > p-select {
+    width: auto;
+} 
+
+p-inputgroup-addon {
+    height: 43px !important;
+}
+
+ngb-modal-backdrop, ngb-modal-window{
+    z-index: 1040 !important;
+}
+
+.p-popover-content {
+    padding: 0 !important;
+    border: 0 !important;
+    @include animated-border-glow(#0ed3a2, #7e0fff, 10s)
+}
+
+.p-popover {
+    border: 0 !important
+}
+
+.p-menu {
+    border-color: transparent !important;
+}
+
+.toogle-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.page-number {
+    width: auto !important;
+}
+
+.checkbox-input {
+    display: flex;
+    align-items: center;
+}
+
+.p-checkbox {
+    margin-right: 0.5rem;
+}
+
+.invalid-input {
+    border: 1px solid #e53935 !important; /* rojo */
+    background-color: #ffe6e6; /* opcional: fondo suave */
+}
+
+.error {
+    color: var(--p-button-danger-background);
+}
+  
+.paginator {
+    position: relative;
+}
+  
+.page-selector {
+    position: absolute;
+    right: 0;
+    width: auto;
+}
+
+a{
+    color: var(--p-primary-400);
+    font-weight: bold;
+    height: fit-content;
+    width: fit-content;
+}
+
+.link {
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+  
+.link:hover {
+    color: var(--p-primary-600);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.row {
+    padding: 0.8rem 0;
+    align-items: center !important;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.bottom-form {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.check-box {
+    display: flex;
+    align-items: center;
+}
+
+.check-box-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+  
+.crowdbeat-text {
+    font-size: var(--font-logo);
+    animation: textColor 10s ease infinite;
+    @include backlight(0, 5vw, 5vw, 0.75, #0ed3a2, #7e0fff, 10s);
+      
+    @keyframes textColor {
+      0% {
+        color: #8b0fff;
+      }
+      50% {
+        color: #0ed3a2;
+      }
+      100% {
+        color: #8b0fff;
+      }
+    }
+}
+
+
+@media (max-width: 767px) {
+    .row{
+      gap: 1.5rem !important;
+    }
+}

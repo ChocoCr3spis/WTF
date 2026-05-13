@@ -1,0 +1,88 @@
+:host {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.navbar {
+  background-color: var(--p-surface-900);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 6px 6px;
+  padding: 0 1rem;
+  border-top: none;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.nav-left{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.username{
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+}
+
+.avatar {
+  padding: 1rem;
+}
+
+:host ::ng-deep .avatar-btn > .p-button {
+  padding: 0 !important;
+}
+
+.menu-avatar {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.5rem !important;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+router-outlet {
+  display: none;
+}
+
+:host ::ng-deep .create-room {
+  width: 80%;
+
+  & > .p-dialog-content {
+    overflow: visible !important;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+}
