@@ -86,3 +86,11 @@ router-outlet {
   display: flex;
   justify-content: center;
 }
+
+.create-btn, :host ::ng-deep .create-btn > button {
+  width: 100%;
+}
+
+.form {
+  padding: 1rem;
+}

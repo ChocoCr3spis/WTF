@@ -24,6 +24,7 @@ import { SliderModule } from 'primeng/slider';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Card } from './components/card';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { Card } from './components/card';
     ToolbarModule,
     SliderModule,
     ToggleSwitchModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputNumberModule
 ],
   exports: [
     BadgeModule,
@@ -81,7 +83,8 @@ import { Card } from './components/card';
     SliderModule,
     ToggleSwitchModule,
     ConfirmDialogModule,
-    Card
+    Card,
+    InputNumberModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

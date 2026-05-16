@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RoomService } from '../../core/services/integrations/room.service';
 
 interface Room {
   id: string;
@@ -17,42 +18,46 @@ interface Room {
   standalone: false
 })
 
-export class Home implements OnInit {
+export class Home {
 
   isSyncSpotify: boolean = false;
-  // stateOptions: any[] = [{ label: 'Mode 1', value: '1' },{ label: 'Mode 2', value: '2' },{ label: 'Mode 3', value: '3' }];
-    stateOptions: any[] = [{ label: 'Publico', value: false },{ label: 'Privado', value: true }]
+  modes: any[] = [{ label: 'Classic', value: 'clasico' },{ label: 'Write It', value: 'write_it' },{ label: 'Flash', value: 'flash' },{ label: 'Random', value: 'random' }];
 
-  genres: string[] = ['Pop', 'Rock', 'Jazz', 'Blues', 'Hip Hop', 'Rap', 'Trap', 'Reggae', 'Salsa', 'Flamenco', 'Música Clásica', 'Electrónica (House, Techno)', 'Heavy Metal', 'Country'];
+  dificultades: string[] = ['It’s a piece of cake (easy)', 'Intermedio', 'It’s hard to swallow (hard)'];
   configForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private roomService: RoomService
   ){
     this.configForm = this.fb.group({
-      nombre: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      genre: [null, [Validators.required]],
-      description: [null, [Validators.maxLength(100)]],
-      visibility:  [false, [Validators.required]],
-      allowEmojis: [false],
-      allowLinks: [false],
-      timeOut: [5],
-      password: [null]
+      dificultad: [null, [Validators.required]],
+      mode:  ['clasico', [Validators.required]],
+      minSeconds: [1, [Validators.required]],
+      maxSeconds: [5, [Validators.required]],
+      numberRounds: [10, [Validators.required]],
+      timeAnswer: [1]
     });
   }
 
   get configFormControls(){ return this.configForm.controls }
 
-  ngOnInit() {
-    console.log('asdasdasd')
-  }
-
   changeValidator(){
-    !this.configFormControls['visibility'].value ? this.configFormControls['password'].clearValidators() : this.configFormControls['password'].addValidators([Validators.required, Validators.pattern(''), Validators.minLength(6), Validators.maxLength(6)]);
-    this.configFormControls['password'].updateValueAndValidity();
+    if(this.configFormControls['mode'].value == 'random'){
+      this.configFormControls['dificultad'].clearValidators();
+      this.configFormControls['timeAnswer'].clearValidators()
+    }else{
+      this.configFormControls['dificultad'].addValidators([Validators.required]);
+      if(this.configFormControls['mode'].value == 'flash'){
+        this.configFormControls['timeAnswer'].addValidators([Validators.required]);
+      }
+    }
+    this.configFormControls['dificultad'].updateValueAndValidity();
+    this.configFormControls['timeAnswer'].updateValueAndValidity();
   }
 
-  saveConfig(){
-    console.log(this.configForm.value)
+  async saveConfig(){
+    let res = await this.roomService.createRoom(this.configForm.getRawValue());
+    sessionStorage.setItem('id', res);
   }
 }

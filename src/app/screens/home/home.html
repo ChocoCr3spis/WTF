@@ -1,67 +1,69 @@
-<form [formGroup]="configForm" (ngSubmit)="saveConfig()">
+<form class="form" [formGroup]="configForm" (ngSubmit)="saveConfig()">
   <div class="row">
     <div class="col-md-12 options">
-      <p-selectbutton [options]="stateOptions" formControlName="visibility" optionLabel="label" optionValue="value" aria-labelledby="basic" (onChange)="changeValidator()"/>
+      <p-selectbutton [options]="modes" formControlName="mode" optionLabel="label" optionValue="value" aria-labelledby="basic" (onChange)="changeValidator()"/>
     </div>
   </div>
-  @if(!this.configFormControls['visibility'].value){
-    <div class="row">
-      <div class="col-md-6">
+  @if(configFormControls['mode'].value != 'flash'){
+    @if(configFormControls['mode'].value != 'random'){
+      <div class="row">
+        <div class="col-md-12">
           <p-floatlabel variant="on">
               <p-iconfield>
-                  <input type="text" pInputText formControlName="nombre"/>
-                  <label for="on_label">Nombre</label>
+                  <p-select [options]="dificultades" formControlName="dificultad" [showClear]="true"/>
+                  <label for="on_label">Dificulty</label>
               </p-iconfield>
           </p-floatlabel>
+        </div>
       </div>
+    }
+  }@else{
+    <div class="row">
       <div class="col-md-6">
         <p-floatlabel variant="on">
             <p-iconfield>
-                <p-select [options]="genres" formControlName="genre" [showClear]="true"/>
-                <label for="on_label">Genero</label>
+                <p-select [options]="dificultades" formControlName="dificultad" [showClear]="true"/>
+                <label for="on_label">Dificulty</label>
             </p-iconfield>
         </p-floatlabel>
       </div>
-    </div>
-  }
-  @else{
-    <div class="row">
-      <div class="col-md-4">
-          <p-floatlabel variant="on">
-              <p-iconfield>
-                  <input type="text" pInputText formControlName="nombre"/>
-                  <label for="on_label">Nombre</label>
-              </p-iconfield>
-          </p-floatlabel>
-      </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <p-floatlabel variant="on">
             <p-iconfield>
-                <p-select [options]="genres" formControlName="genre" [showClear]="true"/>
-                <label for="on_label">Genero</label>
-            </p-iconfield>
-        </p-floatlabel>
-      </div>
-      <div class="col-md-4">
-        <p-floatlabel variant="on">
-            <p-iconfield>
-                <p-inputicon class="pi pi-key"/>
-                <p-password formControlName="password" [toggleMask]="true" [feedback]="false" autocomplete="off" />
-                <label for="on_label">Password</label>
+              <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"  suffix="s" [step]="1" [min]="1" [max]="30"></p-inputnumber>
+              <label for="on_label">Time to answer</label>
             </p-iconfield>
         </p-floatlabel>
       </div>
     </div>
   }
   <div class="row">
-    <div class="col-md-12">
-      <p-iftalabel>
-        <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
-        <label for="description">Description</label>
-      </p-iftalabel>
+    <div class="col-md-4">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="10" [max]="551"></p-inputnumber>
+          <label for="description">Rounds</label>
+        </p-iconfield>
+      </p-floatlabel>
+    </div>
+    <div class="col-md-4">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" suffix="s" [min]="1" [max]="configFormControls['maxSeconds'].value - 1"></p-inputnumber>
+          <label for="description">Min seconds for show</label>
+        </p-iconfield>
+      </p-floatlabel>
+    </div>
+    <div class="col-md-4">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputnumber formControlName="maxSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" suffix="s" [min]="configFormControls['minSeconds'].value + 1 " [max]="10"></p-inputnumber>
+          <label for="description">Max seconds for show</label>
+        </p-iconfield>
+      </p-floatlabel>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12 check-box-group">
       <div class="check-box">
         <p-checkbox formControlName="allowEmojis" inputId="size_normal" name="size" [binary]="true"/>
@@ -72,8 +74,8 @@
         <label for="size_normal">Permitir Links</label>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="bottom-form">
-    <p-button label="Crear" icon="pi pi-plus" styleClass="w-full mx-auto" type="submit" [disabled]="this.configForm.invalid"/>
+    <p-button label="Start" icon="pi pi-plus" class="create-btn" type="submit" [disabled]="this.configForm.invalid"/>
   </div>
 </form>
