@@ -1,81 +1,92 @@
-<form class="form" [formGroup]="configForm" (ngSubmit)="saveConfig()">
+<form class="form" [formGroup]="configForm" (ngSubmit)="start()">
+  <div class="title-block">
+    <h1 class="logo">What's This Food?</h1>
+    <p class="tagline">Guess the pixelated dish before anyone else!</p>
+  </div>
+
   <div class="row">
-    <div class="col-md-12 options">
-      <p-selectbutton [options]="modes" formControlName="mode" optionLabel="label" optionValue="value" aria-labelledby="basic" (onChange)="changeValidator()"/>
+    <div class="col-12 options">
+      <p-selectbutton
+        [options]="modes"
+        formControlName="mode"
+        optionLabel="label"
+        optionValue="value"
+        [allowEmpty]="false"
+        aria-labelledby="mode"
+      />
     </div>
   </div>
-  @if(configFormControls['mode'].value != 'flash'){
-    @if(configFormControls['mode'].value != 'random'){
-      <div class="row">
-        <div class="col-md-12">
-          <p-floatlabel variant="on">
-              <p-iconfield>
-                  <p-select [options]="dificultades" formControlName="dificultad" [showClear]="true"/>
-                  <label for="on_label">Dificulty</label>
-              </p-iconfield>
-          </p-floatlabel>
-        </div>
-      </div>
-    }
-  }@else{
-    <div class="row">
-      <div class="col-md-6">
-        <p-floatlabel variant="on">
-            <p-iconfield>
-                <p-select [options]="dificultades" formControlName="dificultad" [showClear]="true"/>
-                <label for="on_label">Dificulty</label>
-            </p-iconfield>
-        </p-floatlabel>
-      </div>
-      <div class="col-md-6">
-        <p-floatlabel variant="on">
-            <p-iconfield>
-              <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"  suffix="s" [step]="1" [min]="1" [max]="30"></p-inputnumber>
-              <label for="on_label">Time to answer</label>
-            </p-iconfield>
-        </p-floatlabel>
-      </div>
-    </div>
-  }
+
   <div class="row">
-    <div class="col-md-4">
-      <p-floatlabel variant="on">
-        <p-iconfield>
-          <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="10" [max]="551"></p-inputnumber>
-          <label for="description">Rounds</label>
-        </p-iconfield>
-      </p-floatlabel>
-    </div>
-    <div class="col-md-4">
-      <p-floatlabel variant="on">
-        <p-iconfield>
-          <p-inputnumber formControlName="minSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" suffix="s" [min]="1" [max]="configFormControls['maxSeconds'].value - 1"></p-inputnumber>
-          <label for="description">Min seconds for show</label>
-        </p-iconfield>
-      </p-floatlabel>
-    </div>
-    <div class="col-md-4">
-      <p-floatlabel variant="on">
-        <p-iconfield>
-          <p-inputnumber formControlName="maxSeconds" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" suffix="s" [min]="configFormControls['minSeconds'].value + 1 " [max]="10"></p-inputnumber>
-          <label for="description">Max seconds for show</label>
-        </p-iconfield>
-      </p-floatlabel>
+    <div class="col-12 field">
+      <label>Difficulty</label>
+      <p-selectbutton
+        [options]="difficulties"
+        formControlName="difficulty"
+        optionLabel="label"
+        optionValue="value"
+        [allowEmpty]="false"
+        aria-labelledby="difficulty"
+      />
+      <small class="hint">More difficulty = more pixelated &amp; more points per dish.</small>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-md-12 check-box-group">
-      <div class="check-box">
-        <p-checkbox formControlName="allowEmojis" inputId="size_normal" name="size" [binary]="true"/>
-        <label for="size_normal">Permitir Emojis</label>
-      </div>
-      <div class="check-box">
-        <p-checkbox formControlName="allowLinks" inputId="size_normal" name="size" [binary]="true" />
-        <label for="size_normal">Permitir Links</label>
-      </div>
+
+  <div class="row">
+    <div class="col-12 field">
+      <label for="rounds">Rounds</label>
+      <p-inputnumber
+        inputId="rounds"
+        formControlName="numberRounds"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        spinnerMode="horizontal"
+        [step]="1"
+        [min]="1"
+        [max]="50"
+      />
     </div>
-  </div> -->
+  </div>
+
+  <div class="row two-cols">
+    <div class="col-6 field">
+      <label for="minSeconds">Min delay</label>
+      <p-inputnumber
+        inputId="minSeconds"
+        formControlName="minSeconds"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        spinnerMode="horizontal"
+        suffix="s"
+        [step]="1"
+        [min]="0"
+        [max]="29"
+      />
+    </div>
+    <div class="col-6 field">
+      <label for="maxSeconds">Max delay</label>
+      <p-inputnumber
+        inputId="maxSeconds"
+        formControlName="maxSeconds"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        spinnerMode="horizontal"
+        suffix="s"
+        [step]="1"
+        [min]="1"
+        [max]="30"
+      />
+    </div>
+  </div>
+  <small class="hint">The image appears after a random delay between min and max, so everyone can get ready.</small>
+
   <div class="bottom-form">
-    <p-button label="Start" icon="pi pi-plus" class="create-btn" type="submit" [disabled]="this.configForm.invalid"/>
+    <p-button
+      label="Start"
+      icon="pi pi-play"
+      class="create-btn"
+      type="submit"
+      [disabled]="configForm.invalid"
+    />
   </div>
 </form>

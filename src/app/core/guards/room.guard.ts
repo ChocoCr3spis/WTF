@@ -1,15 +1,14 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { GameService } from '../services/game.service';
 
-export const roomGuard: CanActivateFn = async () => {
-    
-    
-    const router = inject(Router);
-    let roomId = sessionStorage.getItem('id')
-    console.log(roomId)
-    if (!roomId) {
-      router.navigate(['/']);
-      return false;
-    }
-    return true
-}
+export const roomGuard: CanActivateFn = () => {
+  const router = inject(Router);
+  const game = inject(GameService);
+
+  if (!game.hasGame()) {
+    router.navigate(['/']);
+    return false;
+  }
+  return true;
+};

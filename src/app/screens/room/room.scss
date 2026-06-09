@@ -1,23 +1,135 @@
 :host {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: stretch;
+  padding: 1rem;
+  overflow: auto;
 }
 
-// .room-components {
-//     flex: 1;
-//     min-height: 0;
-//     overflow: hidden;
-// }
+.game {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-// .qrcodeImage {
-//     display: flex;
-//     flex: 1;
-//     flex-direction: column;
-//     align-items: center;
-// }
+.game-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
 
-// :host ::ng-deep .center > * {
-//     border-radius: 6px;
-// }
+.chip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chip.points {
+  color: var(--p-primary-300);
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.waiting i {
+  font-size: 2.5rem;
+  color: var(--p-primary-400);
+}
+
+.waiting h2 {
+  margin: 0.75rem 0 0.25rem;
+}
+
+.answer h2 {
+  color: var(--p-primary-400);
+  font-size: 1.6rem;
+}
+
+.answer .country {
+  opacity: 0.7;
+  margin: 0.2rem 0 0;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.option {
+  padding: 0.85rem 0.5rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.6);
+  color: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--p-primary-400);
+  transform: translateY(-2px);
+}
+
+.option:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.option.correct {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.2);
+  color: #bbf7d0;
+}
+
+.option.wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+  color: #fecaca;
+}
+
+.hard-actions,
+.next-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.finished h1 {
+  color: var(--p-primary-400);
+  margin-bottom: 0.5rem;
+}
+
+.finished .tie {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.game-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.exit {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}

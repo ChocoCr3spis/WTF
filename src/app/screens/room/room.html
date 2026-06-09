@@ -1,1 +1,68 @@
-<app-card></app-card>
+<div class="game" *ngIf="config as cfg">
+
+  <!-- Cabecera -->
+  <header class="game-header" *ngIf="phase !== 'finished' && round as r">
+    <span class="chip round">Round {{ r.index + 1 }} / {{ r.total }}</span>
+    <span class="chip points">+{{ r.points }} pts</span>
+    <span class="chip mode">{{ cfg.mode === 'easy' ? 'Easy · options' : 'Hard · no options' }}</span>
+  </header>
+
+  <!-- Espera (retardo aleatorio) -->
+  <section class="stage" *ngIf="phase === 'waiting'">
+    <div class="waiting">
+      <i class="pi pi-spin pi-spinner"></i>
+      <h2>Get ready!</h2>
+      <p>Grab the ketchup 🍅 — the dish is about to appear…</p>
+    </div>
+  </section>
+
+  <!-- Juego -->
+  <section class="stage" *ngIf="phase === 'showing' && round as r">
+    <app-food-image [food]="r.food" [difficulty]="cfg.difficulty" [revealed]="revealed"></app-food-image>
+
+    <!-- Respuesta revelada -->
+    <div class="answer" *ngIf="revealed">
+      <h2>{{ r.food.name }}</h2>
+      <p class="country">{{ r.food.country }}</p>
+    </div>
+
+    <!-- Modo easy: opciones -->
+    <div class="options" *ngIf="cfg.mode === 'easy'">
+      <button
+        *ngFor="let opt of r.options"
+        class="option"
+        [disabled]="revealed"
+        [class.correct]="revealed && isCorrect(opt)"
+        [class.wrong]="revealed && selected?.id === opt.id && !isCorrect(opt)"
+        (click)="pick(opt)"
+      >
+        {{ opt.name }}
+      </button>
+    </div>
+
+    <!-- Modo hard: boton revelar -->
+    <div class="hard-actions" *ngIf="cfg.mode === 'hard' && !revealed">
+      <p-button label="Reveal answer" icon="pi pi-eye" severity="secondary" (onClick)="reveal()" />
+    </div>
+
+    <!-- Siguiente ronda -->
+    <div class="next-actions">
+      <p-button label="Next round" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
+    </div>
+  </section>
+
+  <!-- Fin -->
+  <section class="stage" *ngIf="phase === 'finished'">
+    <div class="finished">
+      <h1>Game over!</h1>
+      <p>Count your points on the physical counter. The player with the most points wins.</p>
+      <p class="tie">In case of a tie, whoever has the most lives (fries 🍟) left wins.</p>
+      <p-button label="Play again" icon="pi pi-replay" (onClick)="playAgain()" />
+    </div>
+  </section>
+
+  <!-- Salir -->
+  <footer class="game-footer" *ngIf="phase !== 'finished'">
+    <button class="link exit" (click)="playAgain()">Exit to menu</button>
+  </footer>
+</div>

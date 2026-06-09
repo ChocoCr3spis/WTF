@@ -1,7 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { definePreset } from '@primeuix/themes';
@@ -10,10 +8,7 @@ import { MessageService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
 
-import { environment } from '../environments/environment';
-
-
-const CrowdBeatTheme = definePreset(Aura, {
+const WtfTheme = definePreset(Aura, {
   semantic: {
     primary: {
       50: '{yellow.50}',
@@ -46,13 +41,11 @@ const CrowdBeatTheme = definePreset(Aura, {
 export const appConfig: ApplicationConfig = {
   providers: [
     MessageService,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
-    provideRouter(routes),
-    provideAnimations(),    
+    provideRouter(routes, withHashLocation()),
+    provideAnimations(),
     providePrimeNG({
       theme: {
-        preset: CrowdBeatTheme,
+        preset: WtfTheme,
         options: {
           darkModeSelector: 'system'
         }
