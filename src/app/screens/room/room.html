@@ -3,9 +3,29 @@
   <!-- Cabecera -->
   <header class="game-header" *ngIf="phase !== 'finished' && round as r">
     <span class="chip round">Round {{ r.index + 1 }} / {{ r.total }}</span>
+    <span class="chip level">Lv {{ r.difficulty }}<span *ngIf="cfg.difficulty === 'random'"> 🎲</span></span>
     <span class="chip points">+{{ r.points }} pts</span>
     <span class="chip mode">{{ cfg.mode === 'easy' ? 'Easy · options' : 'Hard · no options' }}</span>
   </header>
+
+  <!-- Marcador en vivo -->
+  <div class="scoreboard" *ngIf="phase !== 'finished'">
+    <div
+      class="score"
+      *ngFor="let p of players; let i = index"
+      [class.out]="p.lives <= 0"
+      [class.active]="answererIndex === i"
+    >
+      <span class="name">{{ p.name }}</span>
+      <span class="pts">{{ p.points }} pts</span>
+      <span class="lives">
+        <ng-container *ngIf="p.lives > 0; else dead">
+          <span *ngFor="let _ of livesArray(p.lives)">🍟</span>
+        </ng-container>
+        <ng-template #dead>OUT</ng-template>
+      </span>
+    </div>
+  </div>
 
   <!-- Espera (retardo aleatorio) -->
   <section class="stage" *ngIf="phase === 'waiting'">
@@ -18,7 +38,7 @@
 
   <!-- Juego -->
   <section class="stage" *ngIf="phase === 'showing' && round as r">
-    <app-food-image [food]="r.food" [difficulty]="cfg.difficulty" [revealed]="revealed"></app-food-image>
+    <app-food-image [food]="r.food" [difficulty]="r.difficulty" [revealed]="revealed"></app-food-image>
 
     <!-- Respuesta revelada -->
     <div class="answer" *ngIf="revealed">
@@ -26,23 +46,55 @@
       <p class="country">{{ r.food.country }}</p>
     </div>
 
-    <!-- Modo easy: opciones -->
+    <!-- 1) Quien responde -->
+    <div class="answerer" *ngIf="!resolved">
+      <p class="prompt">Who's answering?</p>
+      <div class="answerer-buttons">
+        <button
+          *ngFor="let p of players; let i = index"
+          class="who"
+          [class.selected]="answererIndex === i"
+          [disabled]="p.lives <= 0"
+          (click)="selectAnswerer(i)"
+        >
+          {{ p.name }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 2a) Modo easy: opciones -->
     <div class="options" *ngIf="cfg.mode === 'easy'">
       <button
         *ngFor="let opt of r.options"
         class="option"
-        [disabled]="revealed"
+        [disabled]="resolved || answererIndex === null"
         [class.correct]="revealed && isCorrect(opt)"
-        [class.wrong]="revealed && selected?.id === opt.id && !isCorrect(opt)"
+        [class.wrong]="revealed && selectedOption?.id === opt.id && !isCorrect(opt)"
         (click)="pick(opt)"
       >
         {{ opt.name }}
       </button>
     </div>
 
-    <!-- Modo hard: boton revelar -->
-    <div class="hard-actions" *ngIf="cfg.mode === 'hard' && !revealed">
-      <p-button label="Reveal answer" icon="pi pi-eye" severity="secondary" (onClick)="reveal()" />
+    <!-- 2b) Modo hard: revelar + arbitrar -->
+    <div class="hard-actions" *ngIf="cfg.mode === 'hard' && !resolved">
+      <p-button
+        *ngIf="!revealed"
+        label="Reveal answer"
+        icon="pi pi-eye"
+        severity="secondary"
+        (onClick)="revealAnswer()"
+      />
+      <div class="judge" *ngIf="answererIndex !== null">
+        <p-button label="Correct" icon="pi pi-check" severity="success" (onClick)="judge(true)" />
+        <p-button label="Wrong" icon="pi pi-times" severity="danger" (onClick)="judge(false)" />
+      </div>
+    </div>
+
+    <!-- Resultado de la ronda -->
+    <div class="outcome" *ngIf="resolved" [class.ok]="outcome === 'correct'" [class.ko]="outcome === 'wrong'">
+      <ng-container *ngIf="outcome === 'correct'">✓ {{ answererName }} +{{ r.points }} pts</ng-container>
+      <ng-container *ngIf="outcome === 'wrong'">✗ {{ answererName }} loses a life</ng-container>
     </div>
 
     <!-- Siguiente ronda -->
@@ -55,8 +107,15 @@
   <section class="stage" *ngIf="phase === 'finished'">
     <div class="finished">
       <h1>Game over!</h1>
-      <p>Count your points on the physical counter. The player with the most points wins.</p>
-      <p class="tie">In case of a tie, whoever has the most lives (fries 🍟) left wins.</p>
+      <ol class="ranking">
+        <li *ngFor="let p of ranking(); let i = index" [class.winner]="i === 0">
+          <span class="medal" *ngIf="i === 0">🏆</span>
+          <span class="name">{{ p.name }}</span>
+          <span class="pts">{{ p.points }} pts</span>
+          <span class="lives">{{ p.lives }} 🍟</span>
+        </li>
+      </ol>
+      <p class="tie">Winner = most points. Ties are broken by lives left.</p>
       <p-button label="Play again" icon="pi pi-replay" (onClick)="playAgain()" />
     </div>
   </section>

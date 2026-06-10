@@ -5,6 +5,41 @@
   </div>
 
   <div class="row">
+    <div class="col-12 field players" formArrayName="players">
+      <label>Players ({{ minPlayers }}–{{ maxPlayers }})</label>
+
+      <div class="player-row" *ngFor="let ctrl of playerControls; let i = index">
+        <span class="player-index">{{ i + 1 }}</span>
+        <input
+          type="text"
+          pInputText
+          [formControlName]="i"
+          [placeholder]="'Player ' + (i + 1)"
+          maxlength="16"
+        />
+        <button
+          type="button"
+          class="player-remove"
+          (click)="removePlayer(i)"
+          [disabled]="playerControls.length <= minPlayers"
+          aria-label="Remove player"
+        >
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="player-add"
+        (click)="addPlayer()"
+        [disabled]="playerControls.length >= maxPlayers"
+      >
+        <i class="pi pi-plus"></i> Add player
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-12 options">
       <p-selectbutton
         [options]="modes"
@@ -28,7 +63,7 @@
         [allowEmpty]="false"
         aria-labelledby="difficulty"
       />
-      <small class="hint">More difficulty = more pixelated &amp; more points per dish.</small>
+      <small class="hint">More difficulty = more pixelated &amp; more points per dish. Random gives each round a random level.</small>
     </div>
   </div>
 
