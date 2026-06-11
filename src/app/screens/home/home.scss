@@ -17,23 +17,64 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
-.title-block {
-  text-align: center;
+/* Indicador de pasos */
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.logo {
-  font-weight: 800;
-  font-size: 2rem;
+.steps .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.2s ease;
+}
+
+.steps .dot.on {
+  background: var(--p-primary-500);
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.screen-title {
+  text-align: center;
   color: var(--p-primary-400);
-  line-height: 1.1;
+}
+
+.screen-sub {
+  text-align: center;
+  opacity: 0.75;
+  margin: 0 0 0.5rem;
+}
+
+/* Bienvenida */
+.welcome {
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.logo-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
 
 .tagline {
-  margin: 0.35rem 0 0;
-  opacity: 0.8;
+  margin: 0;
+  opacity: 0.85;
 }
 
+/* Filas / campos */
 .row {
   padding: 0.5rem 0;
   display: flex;
@@ -66,6 +107,49 @@
   justify-content: center;
 }
 
+.mode-desc {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.mode-desc li {
+  font-size: 0.85rem;
+  opacity: 0.55;
+  padding: 0.25rem 0.5rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.mode-desc li.active {
+  opacity: 1;
+  border-left-color: var(--p-primary-500);
+}
+
+.mode-desc strong {
+  color: var(--p-primary-300);
+}
+
+.hint {
+  display: block;
+  opacity: 0.6;
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+:host ::ng-deep .p-selectbutton {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+/* Jugadores */
 .players {
   width: 100%;
 }
@@ -114,29 +198,22 @@
   margin-top: 0.25rem;
 }
 
-.hint {
-  display: block;
-  opacity: 0.6;
-  text-align: center;
-  margin-top: 0.25rem;
-}
-
-:host ::ng-deep .p-selectbutton {
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-:host ::ng-deep .p-inputnumber {
-  width: 100%;
-}
-
-.bottom-form {
+/* Acciones (Back / Continue / Start) */
+.actions {
   margin-top: 1.25rem;
   display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.welcome .actions {
   justify-content: center;
 }
 
-.create-btn,
-:host ::ng-deep .create-btn > button {
-  width: 100%;
+.actions :last-child {
+  margin-left: auto;
+}
+
+.welcome .actions :last-child {
+  margin-left: 0;
 }

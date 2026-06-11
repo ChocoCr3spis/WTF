@@ -1,13 +1,26 @@
 <form class="form" [formGroup]="configForm" (ngSubmit)="start()">
-  <div class="title-block">
-    <h1 class="logo">What's This Food?</h1>
-    <p class="tagline">Guess the pixelated dish before anyone else!</p>
+
+  <!-- Indicador de pasos (no en la bienvenida) -->
+  <div class="steps" *ngIf="step > 1">
+    <span class="dot" [class.on]="step >= 2"></span>
+    <span class="dot" [class.on]="step >= 3"></span>
   </div>
 
-  <div class="row">
-    <div class="col-12 field players" formArrayName="players">
-      <label>Players ({{ minPlayers }}–{{ maxPlayers }})</label>
+  <!-- Paso 1: Bienvenida -->
+  <section class="screen welcome" *ngIf="step === 1">
+    <img class="logo-img" src="WTF-logo.png" alt="What's This Food?" />
+    <p class="tagline">Guess the pixelated dish before anyone else!</p>
+    <div class="actions">
+      <p-button label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
+    </div>
+  </section>
 
+  <!-- Paso 2: Jugadores -->
+  <section class="screen" *ngIf="step === 2">
+    <h2 class="screen-title">Players</h2>
+    <p class="screen-sub">Add {{ minPlayers }} to {{ maxPlayers }} players.</p>
+
+    <div class="field players" formArrayName="players">
       <div class="player-row" *ngFor="let ctrl of playerControls; let i = index">
         <span class="player-index">{{ i + 1 }}</span>
         <input
@@ -37,91 +50,104 @@
         <i class="pi pi-plus"></i> Add player
       </button>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12 options">
-      <p-selectbutton
-        [options]="modes"
-        formControlName="mode"
-        optionLabel="label"
-        optionValue="value"
-        [allowEmpty]="false"
-        aria-labelledby="mode"
-      />
+    <div class="actions">
+      <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" (onClick)="back()" />
+      <p-button label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" [disabled]="players.invalid" />
     </div>
-  </div>
+  </section>
 
-  <div class="row">
-    <div class="col-12 field">
-      <label>Difficulty</label>
-      <p-selectbutton
-        [options]="difficulties"
-        formControlName="difficulty"
-        optionLabel="label"
-        optionValue="value"
-        [allowEmpty]="false"
-        aria-labelledby="difficulty"
-      />
-      <small class="hint">More difficulty = more pixelated &amp; more points per dish. Random gives each round a random level.</small>
-    </div>
-  </div>
+  <!-- Paso 3: Ajustes -->
+  <section class="screen" *ngIf="step === 3">
+    <h2 class="screen-title">Game settings</h2>
 
-  <div class="row">
-    <div class="col-12 field">
-      <label for="rounds">Rounds</label>
-      <p-inputnumber
-        inputId="rounds"
-        formControlName="numberRounds"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        spinnerMode="horizontal"
-        [step]="1"
-        [min]="1"
-        [max]="50"
-      />
+    <div class="row">
+      <div class="col-12 field">
+        <label>Game modes</label>
+        <div class="options">
+          <p-selectbutton
+            [options]="modes"
+            formControlName="mode"
+            optionLabel="label"
+            optionValue="value"
+            [allowEmpty]="false"
+            aria-labelledby="mode"
+          />
+        </div>
+        <ul class="mode-desc">
+          <li *ngFor="let m of modes" [class.active]="f['mode'].value === m.value">
+            <strong>{{ m.name }}:</strong> {{ m.desc }}
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div class="row two-cols">
-    <div class="col-6 field">
-      <label for="minSeconds">Min delay</label>
-      <p-inputnumber
-        inputId="minSeconds"
-        formControlName="minSeconds"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        spinnerMode="horizontal"
-        suffix="s"
-        [step]="1"
-        [min]="0"
-        [max]="29"
-      />
+    <div class="row">
+      <div class="col-12 field">
+        <label>Difficulty</label>
+        <p-selectbutton
+          [options]="difficulties"
+          formControlName="difficulty"
+          optionLabel="label"
+          optionValue="value"
+          [allowEmpty]="false"
+          aria-labelledby="difficulty"
+        />
+        <small class="hint">More difficulty = more pixelated &amp; more points per dish. Random gives each round a random level.</small>
+      </div>
     </div>
-    <div class="col-6 field">
-      <label for="maxSeconds">Max delay</label>
-      <p-inputnumber
-        inputId="maxSeconds"
-        formControlName="maxSeconds"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        spinnerMode="horizontal"
-        suffix="s"
-        [step]="1"
-        [min]="1"
-        [max]="30"
-      />
-    </div>
-  </div>
-  <small class="hint">The image appears after a random delay between min and max, so everyone can get ready.</small>
 
-  <div class="bottom-form">
-    <p-button
-      label="Start"
-      icon="pi pi-play"
-      class="create-btn"
-      type="submit"
-      [disabled]="configForm.invalid"
-    />
-  </div>
+    <div class="row">
+      <div class="col-12 field">
+        <label for="rounds">Rounds</label>
+        <p-inputnumber
+          inputId="rounds"
+          formControlName="numberRounds"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          spinnerMode="horizontal"
+          [step]="1"
+          [min]="1"
+          [max]="50"
+        />
+      </div>
+    </div>
+
+    <div class="row two-cols">
+      <div class="col-6 field">
+        <label for="minSeconds">Min delay</label>
+        <p-inputnumber
+          inputId="minSeconds"
+          formControlName="minSeconds"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          spinnerMode="horizontal"
+          suffix="s"
+          [step]="1"
+          [min]="0"
+          [max]="29"
+        />
+      </div>
+      <div class="col-6 field">
+        <label for="maxSeconds">Max delay</label>
+        <p-inputnumber
+          inputId="maxSeconds"
+          formControlName="maxSeconds"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          spinnerMode="horizontal"
+          suffix="s"
+          [step]="1"
+          [min]="1"
+          [max]="30"
+        />
+      </div>
+    </div>
+    <small class="hint">The image appears after a random delay between min and max, so everyone can get ready.</small>
+
+    <div class="actions">
+      <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" (onClick)="back()" />
+      <p-button label="Start" icon="pi pi-play" type="submit" [disabled]="!settingsValid" />
+    </div>
+  </section>
 </form>

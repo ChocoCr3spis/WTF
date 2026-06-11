@@ -13,10 +13,23 @@ const MAX_PLAYERS = 4;
   standalone: false,
 })
 export class Home {
-  // Modos segun el manual.
+  // Paso del asistente: 1 = bienvenida, 2 = jugadores, 3 = ajustes.
+  step = 1;
+
+  // Modos de juego (GameModes) segun el manual.
   modes = [
-    { label: "It's a piece of cake (easy)", value: 'easy' },
-    { label: "It's hard to swallow (hard)", value: 'hard' },
+    {
+      label: "It's a piece of cake (easy)",
+      name: "It's a piece of cake",
+      value: 'easy',
+      desc: 'Options appear to choose from.',
+    },
+    {
+      label: "It's hard to swallow (hard)",
+      name: "It's hard to swallow",
+      value: 'hard',
+      desc: 'No options appear — guess it yourself.',
+    },
   ];
 
   // Dificultad 1-3 (mas dificultad = mas pixelado y mas puntos) o Random por ronda.
@@ -75,13 +88,43 @@ export class Home {
     }
   }
 
+  // ---- navegacion del asistente ----
+
+  get settingsValid(): boolean {
+    return (
+      this.f['mode'].valid &&
+      this.f['difficulty'].valid &&
+      this.f['numberRounds'].valid &&
+      this.f['minSeconds'].valid &&
+      this.f['maxSeconds'].valid
+    );
+  }
+
+  next(): void {
+    if (this.step === 2 && this.players.invalid) {
+      this.players.markAllAsTouched();
+      return;
+    }
+    if (this.step < 3) this.step++;
+  }
+
+  back(): void {
+    if (this.step > 1) this.step--;
+  }
+
   start(): void {
-    if (this.configForm.invalid) return;
+    if (this.configForm.invalid) {
+      this.configForm.markAllAsTouched();
+      return;
+    }
     const raw = this.configForm.getRawValue();
     const min = Math.min(raw.minSeconds, raw.maxSeconds);
     const max = Math.max(raw.minSeconds, raw.maxSeconds);
     const names = (raw.players as string[]).map((n) => n.trim()).filter((n) => n.length > 0);
-    if (names.length < MIN_PLAYERS) return;
+    if (names.length < MIN_PLAYERS) {
+      this.step = 2;
+      return;
+    }
     const config: GameConfig = {
       mode: raw.mode,
       difficulty: raw.difficulty,

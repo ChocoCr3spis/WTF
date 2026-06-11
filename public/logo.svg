@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 300" width="320" height="300" font-family="'Courier New', monospace">
+  <g stroke="#2b1810" stroke-width="6" stroke-linejoin="round">
+    <!-- Top bun -->
+    <path d="M40 78 Q40 18 160 18 Q280 18 280 78 Z" fill="#e3a36b"/>
+    <!-- Lettuce -->
+    <rect x="40" y="80" width="240" height="48" rx="6" fill="#74b94f"/>
+    <!-- Cheese -->
+    <rect x="40" y="130" width="240" height="48" rx="6" fill="#f2c037"/>
+    <!-- Patty -->
+    <rect x="40" y="180" width="240" height="48" rx="6" fill="#8a4a2a"/>
+    <!-- Bottom bun -->
+    <path d="M40 230 L280 230 Q280 262 248 262 L72 262 Q40 262 40 230 Z" fill="#d99a5e"/>
+  </g>
+
+  <!-- Sesame seeds -->
+  <g fill="#fff7e6" stroke="#2b1810" stroke-width="2">
+    <rect x="96" y="50" width="9" height="7" rx="1"/>
+    <rect x="150" y="40" width="9" height="7" rx="1"/>
+    <rect x="206" y="50" width="9" height="7" rx="1"/>
+    <rect x="124" y="62" width="9" height="7" rx="1"/>
+    <rect x="182" y="62" width="9" height="7" rx="1"/>
+    <rect x="234" y="60" width="9" height="7" rx="1"/>
+  </g>
+
+  <!-- WTF letters -->
+  <g font-weight="900" font-size="42" text-anchor="middle" stroke="#2b1810" stroke-width="2">
+    <text x="160" y="119" fill="#fff7e6">W</text>
+    <text x="160" y="169" fill="#cd1c18">T</text>
+    <text x="160" y="219" fill="#fff7e6">F</text>
+  </g>
+
+  <!-- Title -->
+  <g font-weight="900" font-size="26" text-anchor="middle" letter-spacing="2">
+    <text x="160" y="292" fill="#f2c037">WHAT'S <tspan fill="#cd1c18">THIS</tspan> FOOD</text>
+  </g>
+</svg>
