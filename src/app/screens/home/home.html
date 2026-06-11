@@ -11,7 +11,7 @@
     <img class="logo-img" src="WTF-logo.png" alt="What's This Food?" />
     <p class="tagline">Guess the pixelated dish before anyone else!</p>
     <div class="actions">
-      <p-button label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
+      <p-button styleClass="btn-main" label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
     </div>
   </section>
 
@@ -53,7 +53,7 @@
 
     <div class="actions">
       <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" (onClick)="back()" />
-      <p-button label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" [disabled]="players.invalid" />
+      <p-button styleClass="btn-main" label="Continue" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" [disabled]="players.invalid" />
     </div>
   </section>
 
@@ -147,7 +147,7 @@
 
     <div class="actions">
       <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" (onClick)="back()" />
-      <p-button label="Start" icon="pi pi-play" type="submit" [disabled]="!settingsValid" />
+      <p-button styleClass="btn-main" label="Start" icon="pi pi-play" type="submit" [disabled]="!settingsValid" />
     </div>
   </section>
 </form>

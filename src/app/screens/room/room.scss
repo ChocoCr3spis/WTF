@@ -14,6 +14,12 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 2px solid var(--wtf-yellow);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .game-header {
@@ -32,7 +38,7 @@
 }
 
 .chip.points {
-  color: var(--p-primary-300);
+  color: var(--wtf-yellow);
 }
 
 /* Marcador en vivo */
@@ -55,7 +61,7 @@
 }
 
 .score.active {
-  border-color: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
 }
 
 .score.out {
@@ -70,7 +76,7 @@
 }
 
 .score .pts {
-  color: var(--p-primary-300);
+  color: var(--wtf-yellow);
   font-size: 0.85rem;
 }
 
@@ -110,12 +116,12 @@
 }
 
 .who:hover:not(:disabled) {
-  border-color: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
 }
 
 .who.selected {
-  border-color: var(--p-primary-400);
-  background: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
+  background: var(--wtf-yellow);
   color: #1f2937;
 }
 
@@ -169,7 +175,7 @@
 }
 
 .ranking li.winner {
-  border-color: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
 }
 
 .ranking .name {
@@ -179,7 +185,7 @@
 }
 
 .ranking .pts {
-  color: var(--p-primary-300);
+  color: var(--wtf-yellow);
   font-weight: 600;
 }
 
@@ -199,7 +205,7 @@
 
 .waiting i {
   font-size: 2.5rem;
-  color: var(--p-primary-400);
+  color: var(--wtf-yellow);
 }
 
 .waiting h2 {
@@ -207,7 +213,7 @@
 }
 
 .answer h2 {
-  color: var(--p-primary-400);
+  color: var(--wtf-yellow);
   font-size: 1.6rem;
 }
 
@@ -236,7 +242,7 @@
 }
 
 .option:hover:not(:disabled) {
-  border-color: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
   transform: translateY(-2px);
 }
 
@@ -265,7 +271,7 @@
 }
 
 .finished h1 {
-  color: var(--p-primary-400);
+  color: var(--wtf-yellow);
   margin-bottom: 0.5rem;
 }
 
@@ -280,8 +286,17 @@
 }
 
 .exit {
-  background: none;
-  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  opacity: 0.7;
+  transition: all 0.15s ease;
+}
+
+.exit:hover {
+  background: #ffffff;
+  color: #cd1c18;
 }

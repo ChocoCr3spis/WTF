@@ -203,19 +203,18 @@ app-root {
 }
   
 body {
-    font-family: 'Inter', sans-serif;
-    background: radial-gradient(
-        circle at 20% 20%,
-        rgba(168, 85, 247, 0.25),
-        transparent 40%
-        ),
-        radial-gradient(
-        circle at 80% 0%,
-        rgba(236, 72, 153, 0.25),
-        transparent 40%
-        ),
-        #020617;
     font-family: "Inter", sans-serif;
+    /* Estetica fast-food: rojo de marca con detalles amarillos */
+    background:
+        repeating-linear-gradient(
+            45deg,
+            rgba(0, 0, 0, 0.05) 0 22px,
+            rgba(255, 255, 255, 0.04) 22px 44px
+        ),
+        radial-gradient(circle at 12% 12%, rgba(242, 192, 55, 0.40), transparent 45%),
+        radial-gradient(circle at 88% 86%, rgba(242, 192, 55, 0.28), transparent 48%),
+        linear-gradient(160deg, #e22822 0%, #cd1c18 55%, #a51512 100%);
+    background-attachment: fixed;
     color: #ffffff;
 }
   
@@ -241,6 +240,43 @@ h2 {
 .p-button {
     font-size: 14px !important;
     font-weight: 500;
+}
+
+/* Botones principales en amarillo (estetica fast-food) */
+.p-button.btn-main {
+    background: var(--wtf-yellow) !important;
+    border-color: var(--wtf-yellow) !important;
+    color: #2b1810 !important;
+    font-weight: 700;
+}
+
+.p-button.btn-main:enabled:hover {
+    background: #e3ad24 !important;
+    border-color: #e3ad24 !important;
+    color: #2b1810 !important;
+}
+
+/* Selecciones (SelectButton) en amarillo cuando estan activas */
+.p-togglebutton.p-togglebutton-checked .p-togglebutton-content {
+    background: var(--wtf-yellow) !important;
+}
+
+.p-togglebutton.p-togglebutton-checked .p-togglebutton-label,
+.p-togglebutton.p-togglebutton-checked .p-togglebutton-icon {
+    color: #2b1810 !important;
+}
+
+/* Inputs y spinners: resaltado de foco en amarillo */
+.p-inputtext:enabled:focus,
+.p-inputnumber-input:enabled:focus {
+    border-color: var(--wtf-yellow) !important;
+    box-shadow: 0 0 0 1px var(--wtf-yellow) !important;
+}
+
+.p-inputnumber-button:not(:disabled):hover {
+    background: var(--wtf-yellow) !important;
+    border-color: var(--wtf-yellow) !important;
+    color: #2b1810 !important;
 }
 
 

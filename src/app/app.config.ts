@@ -35,6 +35,14 @@ const WtfTheme = definePreset(Aura, {
       700: '{slate.700}',
       800: '{slate.800}',
       900: '{slate.900}'
+    },
+    // Resaltado de foco en amarillo para todos los elementos interactivos.
+    focusRing: {
+      width: '2px',
+      style: 'solid',
+      color: '#f2c037',
+      offset: '2px',
+      shadow: 'none'
     }
   },
 });

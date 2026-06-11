@@ -99,7 +99,7 @@
 
     <!-- Siguiente ronda -->
     <div class="next-actions">
-      <p-button label="Next round" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
+      <p-button styleClass="btn-main" label="Next round" icon="pi pi-arrow-right" iconPos="right" (onClick)="next()" />
     </div>
   </section>
 
@@ -116,12 +116,12 @@
         </li>
       </ol>
       <p class="tie">Winner = most points. Ties are broken by lives left.</p>
-      <p-button label="Play again" icon="pi pi-replay" (onClick)="playAgain()" />
+      <p-button styleClass="btn-main" label="Play again" icon="pi pi-replay" (onClick)="playAgain()" />
     </div>
   </section>
 
   <!-- Salir -->
   <footer class="game-footer" *ngIf="phase !== 'finished'">
-    <button class="link exit" (click)="playAgain()">Exit to menu</button>
+    <button class="exit" (click)="playAgain()">Exit to menu</button>
   </footer>
 </div>

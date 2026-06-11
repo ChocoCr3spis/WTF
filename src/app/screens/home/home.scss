@@ -12,9 +12,10 @@
   max-width: 460px;
   padding: 1.5rem;
   border-radius: 16px;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.72);
+  border: 2px solid var(--wtf-yellow);
   backdrop-filter: blur(6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* Indicador de pasos */
@@ -34,7 +35,7 @@
 }
 
 .steps .dot.on {
-  background: var(--p-primary-500);
+  background: var(--wtf-yellow);
 }
 
 .screen {
@@ -45,12 +46,13 @@
 
 .screen-title {
   text-align: center;
-  color: var(--p-primary-400);
+  color: var(--wtf-yellow);
 }
 
 .screen-sub {
   text-align: center;
-  opacity: 0.75;
+  color: var(--wtf-yellow);
+  opacity: 0.9;
   margin: 0 0 0.5rem;
 }
 
@@ -94,8 +96,8 @@
 }
 
 .field > label {
-  font-weight: 600;
-  opacity: 0.85;
+  font-weight: 700;
+  color: var(--wtf-yellow);
 }
 
 .two-cols .field {
@@ -126,11 +128,12 @@
 
 .mode-desc li.active {
   opacity: 1;
-  border-left-color: var(--p-primary-500);
+  color: var(--wtf-yellow);
+  border-left-color: var(--wtf-yellow);
 }
 
 .mode-desc strong {
-  color: var(--p-primary-300);
+  color: var(--wtf-yellow);
 }
 
 .hint {
@@ -185,7 +188,7 @@
 
 .player-remove:hover:not(:disabled),
 .player-add:hover:not(:disabled) {
-  border-color: var(--p-primary-400);
+  border-color: var(--wtf-yellow);
 }
 
 .player-remove:disabled,
