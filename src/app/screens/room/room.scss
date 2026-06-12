@@ -222,6 +222,14 @@
   margin: 0.2rem 0 0;
 }
 
+.answer .origin {
+  margin: 0.5rem auto 0;
+  max-width: 360px;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
 .options {
   display: grid;
   grid-template-columns: 1fr 1fr;
